@@ -17,10 +17,10 @@ const qs = require('query-string')
     return text;
 };
 
-const scope = process.env.SCOPE
+const scope = 'user-read-private user-read-email streaming user-library-read user-library-modify user-read-playback-state user-modify-playback-state'
 const client_id = process.env.CLIENT_ID
 const client_secret = process.env.CLIENT_SECRET
-const redirect_uri = process.env.REDIRECT_URI
+const redirect_uri = 'http://localhost:3000'
 
 const authHeaderConfig = {
     'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64')),
@@ -28,11 +28,12 @@ const authHeaderConfig = {
 }
 
 module.exports.login = (req, res) => {
+    // console.log(scope, client_id, client_secret)
     res.redirect('https://accounts.spotify.com/authorize?' +
         qs.stringify({
             response_type: 'code',
-            client_id,
             scope,
+            client_id,
             redirect_uri
         }))
 }
@@ -57,6 +58,7 @@ module.exports.callback = async (req, res, next) => {
             })
         })
         .catch(err => {
+            // res.send(err)
             next(new ExpressError('Token could not be retrieved', 400))
         })
 }

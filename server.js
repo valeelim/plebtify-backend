@@ -11,11 +11,14 @@ const auth = require('./controllers/auth')
 const spotify = require('./controllers/spotify')
 
 const app = express()
-const PORT = process.env.PORT || 3001
+const PORT = 3001
 
 app.use(cors())
 app.use(bodyParser.json())
 
+app.get('/', (req, res) => {
+    res.send('You made it :3')
+})
 app.get('/login', auth.login)
 app.post('/callback', auth.callback)
 app.post('/refresh', auth.refresh)
