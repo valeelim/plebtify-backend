@@ -11,6 +11,7 @@ const auth = require('./controllers/auth')
 const spotify = require('./controllers/spotify')
 
 const app = express()
+const PORT = process.env.PORT || 3001
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -44,6 +45,6 @@ app.use((err, req, res, next) => {
     res.status(statusCode).json(err)
 })
 
-app.listen(3001, () => {
-    console.log('Listening on port 3001')
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`)
 })
