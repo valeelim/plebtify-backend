@@ -114,7 +114,7 @@ module.exports.transfer = async (req, res, next) => {
     })
         .then(resp => res.send('Playback transfered'))
         .catch(err => {
-            console.log('transfer error', token, deviceId)
+            console.log('transfer error', token, deviceId, err)
             next(new ExpressError(err))
         })
 }
