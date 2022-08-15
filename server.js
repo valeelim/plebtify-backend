@@ -33,7 +33,8 @@ app.put('/pause', spotify.pause)
 app.put('/transfer', spotify.transfer)
 
 app.get('/lyrics', async (req, res) => {
-    let lyrics = await lyricsFinder(req.query.artist, req.query.track) || 'Not Found!'
+    let lyrics = await lyricsFinder(req.query.artist, req.query.track)
+    console.log('test lyrics', await lyricsFinder('Kodaline', 'All I Want'))
     res.json({ lyrics })
 })
 
