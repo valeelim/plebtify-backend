@@ -20,7 +20,7 @@ const qs = require('query-string')
 const scope = 'user-read-private user-read-email streaming user-library-read user-library-modify user-read-playback-state user-modify-playback-state'
 const client_id = process.env.CLIENT_ID
 const client_secret = process.env.CLIENT_SECRET
-const redirect_uri = 'https://plebtify.herokuapp.com/'
+const redirect_uri = 'https://clonetify.vercel.app/'
 
 const authHeaderConfig = {
     'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64')),
