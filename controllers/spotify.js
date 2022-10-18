@@ -19,7 +19,7 @@ module.exports.status = async (req, res, next) => {
                 data: resp.data
             })
         })
-        .catch(err => console.log('status', err))
+        .catch(err => new ExpressError(err))
 }
 
 module.exports.getTrack = async (req, res, next) => {
@@ -39,13 +39,11 @@ module.exports.getTrack = async (req, res, next) => {
         })
         .catch(err => {
             next(new ExpressError(err))
-            console.log('get track error', err)
         })
 }
 
 module.exports.setRepeat = async (req, res, next) => {
     const { token, deviceId } = req.body
-    console.log('device', deviceId)
     axios({
         url: `https://api.spotify.com/v1/me/player/repeat?state=off&device_id=${deviceId}`,
         headers: apiHeaderConfig(token),
@@ -53,7 +51,6 @@ module.exports.setRepeat = async (req, res, next) => {
     })
         .then(resp => res.send('Succesfully set repeat'))
         .catch(err => {
-            console.log('set repeat')
             next(new ExpressError(err))
         })
 }
@@ -72,12 +69,11 @@ module.exports.getCurrentlyPlaying = async (req, res, next) => {
         headers: apiHeaderConfig(req.body.token)
     })
         .then(resp => res.json(resp.data))
-        .catch(err => console.log('currently playing error', err))
+        .catch(err => new ExpressError(err))
 }
 
 module.exports.play = async (req, res, next) => {
     const { token, trackUri, deviceId } = req.body
-    console.log('trackUri', trackUri)
     await axios.put(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
         uris: trackUri ? [trackUri] : undefined
     }, {
@@ -85,7 +81,6 @@ module.exports.play = async (req, res, next) => {
     })
         .then(resp => res.send('Playback played'))
         .catch(err => {
-            console.log('play error', err)
             next(new ExpressError(err))
         })
 }
@@ -99,7 +94,6 @@ module.exports.pause = async (req, res, next) => {
     })
         .then(resp => res.send('Playback paused'))
         .catch(err => {
-            console.log('pause', err)
             next(new ExpressError(err))
         })
 }
@@ -114,7 +108,6 @@ module.exports.transfer = async (req, res, next) => {
     })
         .then(resp => res.send('Playback transfered'))
         .catch(err => {
-            console.log('transfer error', token, deviceId, err)
             next(new ExpressError(err))
         })
 }
@@ -131,7 +124,6 @@ module.exports.seek = async (req, res, next) => {
     })
         .then(resp => res.send('Seek successful'))
         .catch(err => {
-            console.log('seek went wrong', err)
             next(new ExpressError(err))
         })
 }
